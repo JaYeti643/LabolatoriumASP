@@ -1,8 +1,10 @@
+using Lab0.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
+builder.Services.AddSingleton<IContactService, ContactServiceMemory>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

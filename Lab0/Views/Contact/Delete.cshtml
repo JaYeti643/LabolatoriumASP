@@ -1,0 +1,13 @@
+﻿@model Contact
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<h2>Czy Napewno usunąć obiekt?</h2>
+
+<form asp-action="Delete" method="post">
+    <input asp-for="Id"/>
+    <button class="btn btn-danger">Usuń</button>
+</form>

@@ -5,9 +5,9 @@
     Layout = "_Layout";
 }
 
-<h2>Dodaj kontakt</h2>
-<form method="post" asp-action="Create">
-    
+<h2>Edytuj kontakt</h2>
+<form method="post" asp-action="Edit">
+    <input asp-for="Id"/>
     <div class="mb-2">
         <label class="form-label" asp-for="Name"></label>
         <input class="form-control" asp-for="Name"/>
@@ -24,7 +24,7 @@
         <span class="text-danger" asp-validation-for="BirthDate"></span>
     </div>
     <div class="mb-2">
-     <button class="btn btn-primary" type="submit">Zapisz</button>
+        <button class="btn btn-primary" type="submit">Aktualizuj</button>
      
     </div>
     

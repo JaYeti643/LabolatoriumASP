@@ -5,39 +5,19 @@ namespace Lab0.Controllers;
 
 public class ContactController : Controller
 {
-    private static Dictionary<int, Contact> _contacts = new()
+    private IContactService _contactService;
+
+    public ContactController(IContactService contactService)
     {
-        {
-            1, new Contact()
-            {
-                Id = 1,
-                Name = "Adam",
-                Email = "ad@wsei.edu.pl",
-                BirthDate = DateOnly.FromDateTime(new DateTime(2000, 03, 11))
+        _contactService = contactService;
+    }
 
+    private static int i = 2;
 
-
-            }
-        },
-        {
-            2, new Contact()
-            {
-                Id = 2,
-                Name = "Ewa",
-                Email = "Ew@wsei.edu.pl",
-                BirthDate = DateOnly.FromDateTime(new DateTime(2000, 03, 12))
-                
-                
-                
-            }
-        }
-    };
-
-    private static int i = 0;
     // GET
     public IActionResult Index()
     {
-        return View(_contacts.Values.ToList());
+        return View(_contactService.GetContacts());
     }
 
     [HttpGet] //Formularz
@@ -45,31 +25,76 @@ public class ContactController : Controller
     {
         return View();
     }
-    
-    [HttpPost]//Odbiór danych z formularza
+
+    [HttpPost] //Odbiór danych z formularza
     public IActionResult Create(Contact contact)
     {
         if (ModelState.IsValid)
         {
             //zapamiętanie nowego kontaktu
-            contact.Id = ++i;
-            _contacts.Add(contact.Id, contact);
+            _contactService.CreateContact(contact);
             return RedirectToAction("Index");
         }
+
         return View(contact);
     }
 
     public IActionResult Details(int id)
     {
-        if (_contacts.ContainsKey(id))
+        var contact = _contactService.GetContactById(id);
+        if (contact is not null)
         {
-        return View(_contacts[id]);
+            return View(contact);
         }
-        else
-        {
-            return NotFound();
-        }
+
+
+        return NotFound();
     }
-    
-    
+
+    [HttpGet]
+    public IActionResult Edit(int id)
+    {
+        var contact = _contactService.GetContactById(id);
+        if (contact is not null)
+        {
+            return View(contact);
+        }
+
+        return NotFound();
+    }
+
+    [HttpPost]
+    public IActionResult Edit(Contact contact)
+    {
+        if (ModelState.IsValid)
+        {
+            _contactService.UpdateContact(contact);
+            return RedirectToAction("Index");
+        }
+
+        return View(contact);
+    }
+
+    [HttpGet]
+    public IActionResult Delete(int id)
+    {
+        var contact = _contactService.GetContactById(id);
+        if (contact is not null)
+        {
+            return View(contact);
+        }
+
+        return NotFound();
+    }
+
+    [HttpPost]
+    public IActionResult Delete(Contact contact)
+    {
+        var sucess = _contactService.DeleteContactById(contact.Id);
+        if (sucess)
+        {
+            return RedirectToAction("Index");
+        }
+        return BadRequest();
+    }
 }
