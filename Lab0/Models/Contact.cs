@@ -20,4 +20,8 @@ public class Contact
     [Display(Name = "Data urodzin")]
     [DataType(DataType.Date)]
     public DateOnly BirthDate { get; set; }
+    
+    
+    public Producent? Producent { get; set; }
+    public int? ProducentId { get; set; }
 }
