@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lab0.Models;
 
@@ -24,4 +25,6 @@ public class Contact
     
     public Producent? Producent { get; set; }
     public int? ProducentId { get; set; }
+    public int OrganizationId { get; set; }
+    public List<SelectListItem> Organization { get; set; }
 }

@@ -7,4 +7,6 @@ public interface IContactService
     void CreateContact(Contact contact);
     bool UpdateContact(Contact contact);
     bool DeleteContactById(int id);
+    List<OrganizationEntity> GetOrganizations();
+    
 }

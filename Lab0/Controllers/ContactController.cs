@@ -29,12 +29,12 @@ public class ContactController : Controller
     [HttpPost] //Odbiór danych z formularza
     public IActionResult Create(Contact contact)
     {
-        if (ModelState.IsValid)
-        {
-            //zapamiętanie nowego kontaktu
-            _contactService.CreateContact(contact);
-            return RedirectToAction("Index");
-        }
+        Contact model = new Contact();
+        model.Organization =  _contactService
+            .GetOrganizations()
+            .Select(o => new SelectListItem() { Value = o.Id.ToString(), Text = o.Title })
+            .ToList();
+        return View(model);
 
         return View(contact);
     }

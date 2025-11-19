@@ -36,4 +36,9 @@ public class DbContactService(AppDbContext context) : IContactService
         }
         return false;
     }
+
+    public List<OrganizationEntity> GetOrganizations()
+    {
+        return context.Organizations.ToList();
+    }
 }
